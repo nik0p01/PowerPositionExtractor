@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="PowerPositionWorkerService/PowerPositionWorkerService.csproj" />
+  <Project Path="tests/PowerPositionWorkerService.Tests/PowerPositionWorkerService.Tests.csproj" />
+</Solution>
