@@ -39,7 +39,7 @@ namespace PowerPositionWorkerService.Tests
             // Assert
             Assert.NotNull(trades);
             Assert.NotEmpty(trades);
-            Assert.Equal(sampleTrades.Length, trades.Count());
+            Assert.Equal(sampleTrades, trades);
         }
 
         [Fact]
@@ -51,7 +51,6 @@ namespace PowerPositionWorkerService.Tests
             var mockService = new Mock<IPowerService>();
             var date = new DateTime(2025, 1, 1);
 
-            var sampleTrades = new[] { PowerTrade.Create(date, 24) };
             mockService
                 .Setup(s => s.GetTradesAsync(date))
                 .ReturnsAsync((IEnumerable<PowerTrade>)null);

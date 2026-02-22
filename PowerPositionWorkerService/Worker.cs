@@ -37,6 +37,7 @@ internal class Worker : BackgroundService
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Extract failed");
+                throw;
             }
         }
     }
