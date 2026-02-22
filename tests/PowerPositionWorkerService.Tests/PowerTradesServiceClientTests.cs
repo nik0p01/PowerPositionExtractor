@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Axpo;
@@ -15,13 +14,13 @@ using Xunit;
 
 namespace PowerPositionWorkerService.Tests
 {
-    public class PowerServiceClientTests
+    public class PowerTradesServiceClientTests
     {
         [Fact]
         public async Task GetTradesAsync_ReturnsTrades_WhenServiceReturnsTrades()
         {
             // Arrange
-            var logger = new NullLogger<PowerTradesServiceClient>();
+            var logger = new NullLogger<PowerTradesClient>();
 
             var mockService = new Mock<IPowerService>();
             var date = new DateTime(2025, 1, 1);
@@ -31,7 +30,7 @@ namespace PowerPositionWorkerService.Tests
                 .Setup(s => s.GetTradesAsync(date))
                 .ReturnsAsync(sampleTrades);
 
-            var client = new PowerTradesServiceClient(logger, mockService.Object);
+            var client = new PowerTradesClient(logger, mockService.Object);
 
             // Act
             var trades = await client.GetTradesAsync(date);
@@ -46,7 +45,7 @@ namespace PowerPositionWorkerService.Tests
         public async Task GetTradesAsync_ReturnsEmpty_WhenServiceReturnsNull()
         {
             // Arrange
-            var logger = new NullLogger<PowerTradesServiceClient>();
+            var logger = new NullLogger<PowerTradesClient>();
 
             var mockService = new Mock<IPowerService>();
             var date = new DateTime(2025, 1, 1);
@@ -55,7 +54,7 @@ namespace PowerPositionWorkerService.Tests
                 .Setup(s => s.GetTradesAsync(date))
                 .ReturnsAsync((IEnumerable<PowerTrade>)null);
 
-            var client = new PowerTradesServiceClient(logger, mockService.Object);
+            var client = new PowerTradesClient(logger, mockService.Object);
 
             // Act
             var trades = await client.GetTradesAsync(date);

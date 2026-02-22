@@ -4,12 +4,12 @@ using Polly;
 
 namespace PowerPositionWorkerService.Services;
 
-internal class PowerTradesServiceClient : ITradesClient
+internal class PowerTradesClient : ITradesClient
 {
-    private readonly ILogger<PowerTradesServiceClient> _logger;
+    private readonly ILogger<PowerTradesClient> _logger;
     private readonly IPowerService _powerService;
 
-    public PowerTradesServiceClient(ILogger<PowerTradesServiceClient> logger, IPowerService powerService)
+    public PowerTradesClient(ILogger<PowerTradesClient> logger, IPowerService powerService)
     {
         _logger = logger;
         _powerService = powerService;
@@ -34,7 +34,7 @@ internal class PowerTradesServiceClient : ITradesClient
         if (trades == null)
         {
             _logger.LogWarning("No trades returned for {Date}", tradingDate);
-            return Enumerable.Empty<PowerTrade>();
+            return [];
         }
 
         _logger.LogDebug("Got {Count} trades for {Date}", trades.Count(), tradingDate);

@@ -13,7 +13,7 @@ builder.Services.AddSingleton(TimeZoneInfo.FindSystemTimeZoneById("Europe/London
 
 builder.Services.AddScoped<IReportGenerator, PowerPositionReportGenerator>();
 builder.Services.AddScoped<IReportExporter, PowerPositionReportExporter>();
-builder.Services.AddScoped<ITradesClient, PowerTradesServiceClient>();
+builder.Services.AddScoped<ITradesClient, PowerTradesClient>();
 
 builder.Services.AddScoped<IPowerService, PowerService>();
 

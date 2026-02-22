@@ -3,22 +3,22 @@
     internal class PowerPositionReportGenerator : IReportGenerator
     {
         private readonly ILogger<PowerPositionReportGenerator> _logger;
-        private readonly IReportExporter _csvWriter;
+        private readonly IReportExporter _reportExporter;
         private readonly TimeProvider _timeProvider;
-        private readonly ITradesClient _powerClient;
+        private readonly ITradesClient _tradesClient;
         private readonly TimeZoneInfo _tz;
 
         public PowerPositionReportGenerator(
             ILogger<PowerPositionReportGenerator> logger,
-            IReportExporter csvWriter,
+            IReportExporter reportExporter,
             TimeProvider timeProvider,
-            ITradesClient powerClient,
+            ITradesClient tradesClient,
             TimeZoneInfo tz)
         {
             _logger = logger;
-            _csvWriter = csvWriter;
+            _reportExporter = reportExporter;
             _timeProvider = timeProvider;
-            _powerClient = powerClient;
+            _tradesClient = tradesClient;
             _tz = tz;
         }
 
@@ -28,7 +28,7 @@
 
             var tradingDate = GetTradingDate(localDateTimeNow);
 
-            var trades = await _powerClient.GetTradesAsync(tradingDate);
+            var trades = await _tradesClient.GetTradesAsync(tradingDate);
 
             var hourlyVolumes = trades
                 .SelectMany(t => t.Periods)
@@ -50,7 +50,7 @@
                 };
             });
 
-            await _csvWriter.ExportAsync(rows, localDateTimeNow);
+            await _reportExporter.ExportAsync(rows, localDateTimeNow);
 
             _logger.LogInformation("Extract completed for {Date}", tradingDate);
         }
